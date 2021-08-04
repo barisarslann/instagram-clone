@@ -1,0 +1,34 @@
+.appPost {
+    max-width: 500px;
+    background-color: white;
+    border: 1px solid #dbdbdb;
+    margin-bottom: 45px;
+}
+
+.appPostImage {
+    width: 100%;
+    object-fit: contain;
+    display: grid;
+    border-top: 1px solid #dbdbdb;
+    border-bottom: 1px solid #dbdbdb;
+}
+
+.appPostText {
+    font-weight: normal;
+    padding: 10px;
+}
+
+.appPostHeader {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.appPostAvatar {
+    margin-right: 10px;
+}
+
+.app__signup {
+    display: flex;
+    flex-direction: column;
+}
