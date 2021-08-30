@@ -1,6 +1,22 @@
 .appHeader {
-    background-color: white;
-    border-bottom: 1px solid #dbdbdb;
-    padding: 20px;
-    object-fit: contain;
-  }
+  background-color: white;
+  border-bottom: 1px solid #dbdbdb;
+  padding: 10px 20px;
+  object-fit: contain;
+}
+.app__signup {
+  display: flex;
+  flex-direction: column;
+}
+.appLogoImage {
+  width: 103px;
+  display: grid;
+}
+.app__header-maxWidth {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 935px;
+  margin: 0 auto;
+  padding: 0 20px;
+}

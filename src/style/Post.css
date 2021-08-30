@@ -1,5 +1,4 @@
 .appPost {
-    max-width: 500px;
     background-color: white;
     border: 1px solid #dbdbdb;
     margin-bottom: 45px;
@@ -16,6 +15,8 @@
 .appPostText {
     font-weight: normal;
     padding: 10px;
+    border-bottom: 1px solid #aaa;
+    margin-bottom: 10px;
 }
 
 .appPostHeader {
@@ -28,7 +29,39 @@
     margin-right: 10px;
 }
 
-.app__signup {
+.app__posts {
+    padding: 20px;
+    max-width: 935px;
+    margin: auto;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+}
+
+.app__postsLeft {
+    max-width: 614px;
+}
+.app__postsRight {
+    max-width: 293px;
+}
+.post__comments p {
+    padding: 0 10px 3px 10px;
+}
+.appPost form {
+    display: flex;
+    padding: 10px;
+}
+.post__input {
+    flex: 0.9 1;
+    border: 1px solid lightgray;
+    padding: 5px 10px;
+}
+.post__input:focus {
+    outline: none;
+}
+.post__button {
+    flex: 0.1;
+    margin-left: 10px;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid lightgray;
 }

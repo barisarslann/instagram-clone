@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import './style/App.css';
 import Header from './components/Header';
 import Post from './components/Post';
 import { db, auth } from './firebase';
@@ -7,6 +6,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { Button, Input } from '@material-ui/core';
 import ImageUpload from './ImageUpload';
+import './style/Header.css'
+import './style/App.css'
 
 function getModalStyle() {
   const top = 50;
@@ -45,7 +46,7 @@ function App() {
   // bu bir style'dır.
   const [modalStyle] = useState(getModalStyle);
   const [posts, setPosts] = useState([]);
-  const [open, setOpen] = useState(false);
+  const [openSignUp, setOpenSignUp] = useState(false);
   const [openSignIn, setOpenSignIn] = useState(false);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -74,7 +75,7 @@ function App() {
   // Kullanıcının eklediği verileri takip eder ve kod bloğunu oluşturup anasayfaya verir
   useEffect(() => {
     // onsnapshot database i izler ve yeni eklenen bir gönderi olup olmadığını kontrol eder.
-    db.collection('posts').onSnapshot(snapshot => {
+    db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
       // her yeni gönderi eklendiğinde, bu kod tetiklenir ve gönderi otomatik olarak eklenir.
       setPosts(snapshot.docs.map(doc => (
         {
@@ -99,6 +100,8 @@ function App() {
       })
     })
     .catch((error) => setErrMessage(error.message))
+
+    setOpenSignUp(false)
   }
 
   const signIn = (event) => {
@@ -115,17 +118,11 @@ function App() {
 
   return (
     <div className="App">
-      {user?.displayName ? (
-        <ImageUpload username={user.displayName} />
-      ) : (
-        <h3>Sorry you need to login to upload</h3>
-      )}
-      
 
       {/* // Kayıt olma modal'ı */}
       <Modal
-        open={open}
-        onClose={() => setOpen(false)}
+        open={openSignUp}
+        onClose={() => setOpenSignUp(false)}
       >
       <div style={modalStyle} className={classes.paper}>
         <form className="app__signup">
@@ -182,21 +179,24 @@ function App() {
       </form>
       </div>
       </Modal>
-
-      <Header />
-      {user ? (
-        <Button onClick={() => auth.signOut()}>Logout</Button>
-      ) : (
-        <div className="app__loginContainer">
-          <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
-          <Button onClick={() => setOpen(true)}>Sign Up</Button>
+      <Header user={user} openSignIn={setOpenSignIn} openSignUp={setOpenSignUp} />
+      <div className="app__posts">
+        <div className="app__postsLeft">
+          {
+            posts.map(({id ,post}) => (
+              <Post key={id} postId={id} user={user} username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
+            ))
+          }
         </div>
+        <div className="app__postsRight">
+          Hello World!
+        </div>
+      </div>
+      {user?.displayName ? (
+        <ImageUpload username={user.displayName} />
+      ) : (
+        <h3>Sorry you need to login to upload</h3>
       )}
-      {
-        posts.map(({id ,post}) => (
-          <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
-        ))
-      }
     </div>
   );
 }
